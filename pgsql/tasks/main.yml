@@ -28,7 +28,7 @@
 
 - name: New data dir
   ansible.builtin.file:
-    path: {{pg_data}}
+    path: "{{pg_data}}"
     state: directory
     owner: postgres
     group: postgres
