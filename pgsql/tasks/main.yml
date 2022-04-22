@@ -1,0 +1,44 @@
+---
+# tasks file for pgsql
+#Работаем с Ubuntu 20.04
+
+- name: Install postgres
+  ansible.builtin.apt:
+    name: postgresql-{{pg_ver}}
+    state: present
+    update_cache: yes
+  notify: stop_pgsql
+
+- name: Remove default pgsql config
+  ansible.builtin.file:
+    path: /etc/postgresql/{{pg_ver}}/main/postgresql.conf
+    state: absent
+
+- name: Put our custom pgsql config
+  ansible.builtin.template:
+    src: templates/postgresql.conf.j2
+    dest: /etc/postgresql/{{pg_ver}}/main/postgresql.conf
+
+- name: Change ownership of config
+  ansible.builtin.file:
+    path: /etc/postgresql/{{pg_ver}}/main/postgresql.conf
+    state: file
+    owner: postgres
+    group: postgres
+
+- name: New data dir
+  ansible.builtin.file:
+    path: "{{pg_data}}"
+    state: directory
+    owner: postgres
+    group: postgres
+
+- name: Init db
+  ansible.builtin.command: /usr/lib/postgresql/{{pg_ver}}/bin/initdb -D {{pg_data}} --auth-local peer --auth-host md5
+  become: yes
+  become_user: postgres
+#    argv:
+#      - /usr/lib/postgresql/"{{pg_ver}}"/bin/initdb
+#      - -D "{{pg_data}}"
+#      - --auth-local peer --auth-host md5
+  notify: start_pgsql

@@ -1,0 +1,7 @@
+---
+# handlers file for docker
+- name: Start docker
+  ansible.builtin.systemd:
+    state: started
+    name: docker
+  listen: "start_docker"

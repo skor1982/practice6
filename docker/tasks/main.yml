@@ -1,0 +1,11 @@
+---
+# tasks file for docker
+#Работаем с Ubuntu 20.04
+
+- name: Install docker
+  ansible.builtin.apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+  notify: start_docker
+

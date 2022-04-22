@@ -1,0 +1,23 @@
+#Работаем с Ubuntu 20.04
+---
+- name: Setup docker
+
+  hosts: app
+  
+  gather_facts: no
+
+  become: yes
+
+  roles:
+    - docker
+
+- name: Setup pgsql
+
+  hosts: database 
+
+  gather_facts: no
+
+  become: yes
+
+  roles:
+    - role: pgsql
