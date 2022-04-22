@@ -37,8 +37,4 @@
   ansible.builtin.command: /usr/lib/postgresql/{{pg_ver}}/bin/initdb -D {{pg_data}} --auth-local peer --auth-host md5
   become: yes
   become_user: postgres
-#    argv:
-#      - /usr/lib/postgresql/"{{pg_ver}}"/bin/initdb
-#      - -D "{{pg_data}}"
-#      - --auth-local peer --auth-host md5
   notify: start_pgsql

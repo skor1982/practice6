@@ -4,10 +4,10 @@
   ansible.builtin.systemd:
     state: stopped
     name: postgresql
-    listen: stop_pgsql
+  listen: stop_pgsql
 
 - name: Start pgsql  
   ansible.builtin.systemd:
     state: started
     name: postgresql
-    listen: start_pgsql
+  listen: start_pgsql
