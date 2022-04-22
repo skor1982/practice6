@@ -20,4 +20,4 @@
   become: yes
 
   roles:
-    - role: pgsql
+    - pgsql
